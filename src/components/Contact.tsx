@@ -20,16 +20,40 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    toast({
-      title: "Заявка отправлена!",
-      description: "Я свяжусь с вами в ближайшее время.",
-    });
-    
-    setFormData({ name: "", phone: "", email: "", message: "" });
-    setIsSubmitting(false);
+    try {
+      const response = await fetch("https://hook.us2.make.com/8eirs14nx0hvsoycnelqycd1wyr3icev", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          phone: formData.phone,
+          email: formData.email,
+          message: formData.message,
+          timestamp: new Date().toISOString(),
+        }),
+      });
+
+      if (response.ok) {
+        toast({
+          title: "Заявка отправлена!",
+          description: "Я свяжусь с вами в ближайшее время.",
+        });
+        setFormData({ name: "", phone: "", email: "", message: "" });
+      } else {
+        throw new Error("Failed to submit");
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      toast({
+        title: "Ошибка отправки",
+        description: "Пожалуйста, попробуйте ещё раз или свяжитесь напрямую.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
