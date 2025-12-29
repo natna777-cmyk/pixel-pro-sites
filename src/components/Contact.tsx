@@ -74,7 +74,14 @@ const Contact = () => {
             <div className="gradient-border p-8 h-full">
               <div className="relative z-10">
                 <h3 className="text-2xl font-bold mb-6">Оставить заявку</h3>
-                <form onSubmit={handleSubmit} className="space-y-5">
+                <form 
+                  name="contact"
+                  method="POST"
+                  data-netlify="true"
+                  onSubmit={handleSubmit} 
+                  className="space-y-5"
+                >
+                  <input type="hidden" name="form-name" value="contact" />
                   <div className="relative">
                     <User className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                     <Input
