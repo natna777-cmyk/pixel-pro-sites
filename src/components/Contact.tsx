@@ -101,6 +101,7 @@ const Contact = () => {
                 <form 
                   name="contact"
                   method="POST"
+                  action="https://hook.us2.make.com/8eirs14nx0hvsoycnelqycd1wyr3icev"
                   data-netlify="true"
                   onSubmit={handleSubmit} 
                   className="space-y-5"
